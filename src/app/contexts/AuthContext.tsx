@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (token) {
       // verify token and get user data
       // this would be an API call to get the user data
-      setUser({ id: "1", email: "user@example.com", name: "John Doe" });
+      // setUser({ id: "1", email: "user@example.com", name: "John Doe" });
     }
     setLoading(false);
   }, []);
