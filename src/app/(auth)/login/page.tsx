@@ -27,6 +27,23 @@ export default function LoginPage() {
       const response: any = await api.post("/auth/login", payloadObj);
 
       if (response?.data?.success === true) {
+        const userRole = response?.data?.user?.role;
+        const userStatus = response?.data?.user?.status;
+
+        if (userRole !== "ADMIN") {
+          setIsLoading(false);
+          toast.error("Access Denied: Admin Only");
+          return;
+        }
+
+        if (userStatus !== "ACTIVE") {
+          setIsLoading(false);
+          toast.error(
+            "Access Denied: Account Inactive, Please Contact Support"
+          );
+          return;
+        }
+
         const token = response?.data?.token;
         const user = response?.data?.user;
         const message = response?.data?.message;
@@ -35,9 +52,7 @@ export default function LoginPage() {
 
         setIsLoading(false);
 
-        toast.success(message, {
-          autoClose: 4000,
-        });
+        toast.success(message);
 
         router.push("/home");
       }
@@ -45,9 +60,7 @@ export default function LoginPage() {
       setIsLoading(false);
       console.error("Error logging in: ", error);
       const errorMessage = error?.response?.data?.message;
-      toast.error(errorMessage ? errorMessage : "Error logging in", {
-        autoClose: 4000,
-      });
+      toast.error(errorMessage ? errorMessage : "Error logging in");
     }
   };
 
@@ -55,7 +68,10 @@ export default function LoginPage() {
     <div className="bg-gray-900 rounded-2xl shadow-2xl p-8 border border-gray-800">
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">
+          NotesXpress Admin
+        </h1>
+        <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
         <p className="text-gray-400">Sign In To Your Account</p>
       </div>
 

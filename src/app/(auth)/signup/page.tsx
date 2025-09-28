@@ -91,9 +91,7 @@ export default function SignUpPage() {
 
         setIsLoading(false);
 
-        toast.success(message, {
-          autoClose: 4000,
-        });
+        toast.success(message);
 
         router.push("/home");
       }
@@ -101,9 +99,7 @@ export default function SignUpPage() {
       setIsLoading(false);
       console.error("Error signing up: ", error);
       const errorMessage = error?.response?.data?.message;
-      toast.error(errorMessage ? errorMessage : "Error signing up", {
-        autoClose: 4000,
-      });
+      toast.error(errorMessage ? errorMessage : "Error signing up");
     }
   };
 
