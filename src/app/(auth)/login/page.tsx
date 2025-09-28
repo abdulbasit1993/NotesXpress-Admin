@@ -26,18 +26,12 @@ export default function LoginPage() {
 
       const response: any = await api.post("/auth/login", payloadObj);
 
-      console.log("response data (/auth/login): ", response);
-
       if (response?.data?.success === true) {
         const token = response?.data?.token;
         const user = response?.data?.user;
         const message = response?.data?.message;
         localStorage.setItem("access-token", token);
         login(user);
-
-        console.log("token from response: ", token);
-        console.log("user from response: ", user);
-        console.log("message from response: ", message);
 
         setIsLoading(false);
 
@@ -49,7 +43,7 @@ export default function LoginPage() {
       }
     } catch (error: any) {
       setIsLoading(false);
-      console.log("Error logging in: ", error);
+      console.error("Error logging in: ", error);
       const errorMessage = error?.response?.data?.message;
       toast.error(errorMessage ? errorMessage : "Error logging in", {
         autoClose: 4000,
