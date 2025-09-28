@@ -23,22 +23,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const checkUserAuth = async () => {
-    console.log("checkUserAuth called..................");
-    // Check for existing token
     const token = localStorage.getItem("access-token");
-    console.log("token (checkUserAuth): ", token);
     if (token) {
-      // verify token and get user data
-      // this would be an API call to get the user data
-      // setUser({ id: "1", email: "user@example.com", name: "John Doe" });
-
-      const response = await api.get("/auth/profile");
-
-      console.log("response data from checkUserAuth: ", response);
-
-      if (response?.data?.success === true) {
-        const user = response?.data?.data;
-        setUser(user);
+      try {
+        const response = await api.get("/auth/profile");
+        if (response?.data?.success === true) {
+          const user = response?.data?.data;
+          setUser(user);
+        }
+      } catch (error) {
+        console.error("Error checking user authentication: ", error);
       }
     }
     setLoading(false);

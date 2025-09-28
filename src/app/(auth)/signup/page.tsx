@@ -82,8 +82,6 @@ export default function SignUpPage() {
 
       const response: any = await api.post("/auth/signup", payloadObj);
 
-      console.log("response data (/auth/signup): ", response);
-
       if (response?.data?.success === true) {
         const token = response?.data?.token;
         const user = response?.data?.user;
@@ -101,7 +99,7 @@ export default function SignUpPage() {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log("Error signing up: ", error);
+      console.error("Error signing up: ", error);
       const errorMessage = error?.response?.data?.message;
       toast.error(errorMessage ? errorMessage : "Error signing up", {
         autoClose: 4000,
